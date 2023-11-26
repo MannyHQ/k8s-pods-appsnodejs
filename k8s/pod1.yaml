@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linear-search-pod
+  labels:
+    app: linear-search
+spec:
+  containers:
+  - name: linear-search-container
+    image: mannyhq/nodeapp1:v1
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+    ports:
+    - containerPort: 3000
+    command: ["node","app1.js"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: linear-search-service
+spec:
+  selector:
+    app: linear-search
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer

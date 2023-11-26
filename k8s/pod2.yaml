@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: binary-search-pod
+  labels:
+    app: binary-search
+spec:
+  containers:
+  - name: binary-search-container
+    image: mannyhq/appnode2:v1
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+    ports:
+    - containerPort: 3000
+    command: ["node","ap2.js"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: binary-search-service
+spec:
+  selector:
+    app: binary-search
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
